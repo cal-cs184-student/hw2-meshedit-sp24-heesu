@@ -74,8 +74,19 @@ namespace CGL
      */
     Vector3D BezierPatch::evaluate(double u, double v) const
     {
-        // TODO Part 2.
-        return Vector3D();
+        // Initialize vector to store interpolated points in u direction
+        std::vector<Vector3D> uInterpolatedPoints;
+
+        // Evaluate Bezier curves in u direction
+        int m = controlPoints.size(); // number of rows
+        for (int i = 0; i < m; ++i) {
+            // Evaluate a Bezier curve in the u direction
+            Vector3D point = evaluate1D(controlPoints[i], u);
+            uInterpolatedPoints.push_back(point);
+        }
+
+        // Evaluate the resulting interpolated points from Bezier curves in the v direction
+        return evaluate1D(uInterpolatedPoints, v);
     }
 
     Vector3D Vertex::normal(void) const
